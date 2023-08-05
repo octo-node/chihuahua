@@ -114,8 +114,8 @@ build-reproducible-generic: go.sum
 		--build-arg VERSION="$(VERSION)" \
 		-f Dockerfile .
 	$(DOCKER) create -ti --name $(subst /,-,latest-build-$(PLATFORM)) latest-build-$(PLATFORM) chihuahuad
-	mkdir -p $(BUILDDIR)/$(NETWORK)/$(PLATFORM)/
-	$(DOCKER) cp -a $(subst /,-,latest-build-$(PLATFORM)):/usr/local/bin/chihuahuad $(BUILDDIR)/$(NETWORK)/$(PLATFORM)/chihuahuad
+	$(DOCKER) cp -a $(subst /,-,latest-build-$(PLATFORM)):/usr/local/bin/chihuahuad chihuahuad_$(subst /,_,$(PLATFORM))
+	sha256sum chihuahuad_$(subst /,_,$(PLATFORM)) >> ./chihuahuad_sha256.txt
 
 # Add check to make sure we are using the proper Go version before proceeding with anything
 check-go-version:

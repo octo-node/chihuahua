@@ -1,0 +1,23 @@
+name: "Release"
+
+on:
+  push:
+    tags:
+      - v*
+jobs:
+  draft-release:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Copy Binary
+        run: |
+          make build-reproducible-all
+
+      - name: Draft Release
+        uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          files: |
+            chihuahua_linux_amd64
+            chiahuahuad_linux_arm64
+            chihuahuad_sha256.txt
